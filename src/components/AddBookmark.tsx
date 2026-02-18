@@ -28,6 +28,7 @@ export default function AddBookmark() {
             if (error) {
                 alert('Error adding bookmark: ' + error.message)
             } else {
+                // Clear immediately after success to signal completion
                 setUrl('')
                 setTitle('')
             }

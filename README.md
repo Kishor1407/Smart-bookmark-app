@@ -66,10 +66,13 @@ CREATE POLICY "Users can delete their own" ON bookmarks FOR DELETE USING (auth.u
 **Problem**: Google OAuth would fail with a `redirect_uri_mismatch` error.
 **Discovery**: The local development server was running on port **3001**, but Google Cloud and Supabase were configured for port 3000.
 **Solution**: Configured the exact callback URL `http://localhost:3001/auth/callback` in both Google Cloud Console and Supabase Dashboard.
-
-### 5. Real-time Subscription Logic
-**Problem**: Ensuring the list updated without a refresh.
-**Solution**: Implemented a `useEffect` hook that subscribes to the `bookmarks` table. Integrated a `payload` handler to update the local React state (`setBookmarks`) whenever an `INSERT` or `DELETE` event is detected.
+### 6. Production Redirects (Vercel)
+**Problem**: After logging in on the Vercel app, it redirects back to `localhost:3001`.
+**Cause**: Supabase "Site URL" is still set to the local development address.
+**Fix**: 
+1. Go to **Supabase Dashboard** > **Authentication** > **URL Configuration**.
+2. Update **Site URL** to your Vercel URL (e.g., `https://your-app.vercel.app`).
+3. Add the Vercel URL to the **Redirect URLs** list as well.
 
 ---
 
